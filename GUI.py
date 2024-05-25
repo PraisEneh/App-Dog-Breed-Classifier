@@ -184,8 +184,8 @@ class Ui_MainWindow(object):
     def detectImage(self):
         if self.filename:
             img = cv2.imread(self.filename)
-            img = cv2.resize(img, (128, 128))  # Resize as per your model's input
-            img = img.astype('float32') / 255.0  # Normalize if used during training
+            img = cv2.resize(img, (128, 128))  # Resize as per model's input
+            img = img.astype('float32') / 255.0  # Normalize
             img = np.expand_dims(img, axis=0)  # Add batch dimension
 
             predictions = model.predict(img)

@@ -1,5 +1,6 @@
 *.h5
 *.jpg
+*.png
 model/FT_RR-20_ZR-0.5_LR-0.0001_CLR-False_LR-0.001-CL-6-Drop-0.2-FSize-512-07_28_42.h5 filter=lfs diff=lfs merge=lfs -text
 model/FT_FURTHER_TESTRUN_RR-30-ZR-0.4-LR-1e-05-Very_Focus_FT_RR-30_ZR-0.3_LR-1e-05_CLR-True_LR-0.001-CL-6-Drop-0.2-FSize-512-07_28_42.h5 filter=lfs diff=lfs merge=lfs -text
 model/FROZEN_FT2_EPOCH-10_LR-0.0001_RR-30_ZR-0.3_FL-5_FROZEN_FT_RR-30-ZR-0.4-LR-0.0001-LR-0.001-CL-6-Drop-0.2-FSize-512-07_28_42.h5 filter=lfs diff=lfs merge=lfs -text
