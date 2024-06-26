@@ -176,16 +176,20 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def getImage(self):
-        root = tk.Tk()
-        root.withdraw()  # Hide the main window
-        self.filename = filedialog.askopenfilename(
-            title="Select an image file",
-            filetypes=[("Image files", "*.png *.jpg *.jpeg *.bmp *.gif")]
-        )
-        print("Selected file:", self.filename)
-        if self.filename:
-            self.label.setPixmap(QtGui.QPixmap(self.filename))
-        root.destroy()
+        try:
+            root = tk.Tk()
+            root.withdraw()  # Hide the main window
+            self.filename = filedialog.askopenfilename(
+                title="Select an image file",
+                filetypes=[("Image files", "*.png *.jpg *.jpeg *.bmp *.gif")]
+            )
+            print("Selected file:", self.filename)
+            if self.filename:
+                self.label.setPixmap(QtGui.QPixmap(self.filename))
+            root.destroy()
+        except Exception as e:
+            print("Error:", e)
+
 
     def detectImage(self):
         if self.filename:
