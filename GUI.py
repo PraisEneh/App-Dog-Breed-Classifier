@@ -9,7 +9,8 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from tkinter.filedialog import askopenfilename, asksaveasfilename
+import tkinter as tk
+from tkinter import filedialog
 from tensorflow.keras.models import load_model
 from tensorflow.keras.utils import load_img, save_img, img_to_array
 from tensorflow.keras.applications.resnet50 import preprocess_input
@@ -175,11 +176,16 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def getImage(self):
-        print("Hi")
-        self.filename = askopenfilename()
-        print("Type: ", type(self.filename))
+        root = tk.Tk()
+        root.withdraw()  # Hide the main window
+        self.filename = filedialog.askopenfilename(
+            title="Select an image file",
+            filetypes=[("Image files", "*.png *.jpg *.jpeg *.bmp *.gif")]
+        )
+        print("Selected file:", self.filename)
         if self.filename:
             self.label.setPixmap(QtGui.QPixmap(self.filename))
+        root.destroy()
 
     def detectImage(self):
         if self.filename:
