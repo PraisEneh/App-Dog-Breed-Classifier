@@ -10,16 +10,11 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from tensorflow.keras.models import load_model
-from tensorflow.keras.utils import load_img, save_img, img_to_array
-from tensorflow.keras.applications.resnet50 import preprocess_input
-from PIL import Image, ImageGrab
+from PIL import ImageGrab
 import numpy as np
 import cv2
 import ast
-import os
 
-# TEST_DIR = "test/"
-# CATEGORIES = [folder for folder in os.listdir(TEST_DIR)]
 with open('categories.txt', 'r') as file:
     content = file.read()
 
@@ -60,8 +55,6 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1598, 759)
-        #MainWindow.setMinimumSize(1920, 1080)
-        #MainWindow.setMaximumSize(1920, 1080)
         font = QtGui.QFont()
         font.setPointSize(8)
         font.setUnderline(False)
@@ -106,12 +99,6 @@ class Ui_MainWindow(object):
         font.setPointSize(14)
         self.label_3.setFont(font)
         self.label_3.setObjectName("label_3")
-        # self.label_4 = QtWidgets.QLabel(self.centralwidget)
-        # self.label_4.setGeometry(QtCore.QRect(1170, 230, 281, 31))
-        # font = QtGui.QFont()
-        # font.setPointSize(11)
-        # self.label_4.setFont(font)
-        # self.label_4.setObjectName("label_4")
         self.label_5 = QtWidgets.QLabel(self.centralwidget)
         self.label_5.setGeometry(QtCore.QRect(1170, 410, 281, 31))
         font = QtGui.QFont()
@@ -145,14 +132,6 @@ class Ui_MainWindow(object):
         self.nameTextEdit.setFont(font)
         self.nameTextEdit.setReadOnly(True)
         self.nameTextEdit.setObjectName("nameTextEdit")
-        # self.percentTextEdit = QtWidgets.QPlainTextEdit(self.centralwidget)
-        # self.percentTextEdit.setGeometry(QtCore.QRect(1170, 260, 391, 131))
-        # font = QtGui.QFont()
-        # font.setPointSize(20)
-        # self.percentTextEdit.setFont(font)
-        # self.percentTextEdit.setReadOnly(True)
-        # self.percentTextEdit.setPlainText("")
-        # self.percentTextEdit.setObjectName("percentTextEdit")
         self.othersTextEdit = QtWidgets.QPlainTextEdit(self.centralwidget)
         self.othersTextEdit.setGeometry(QtCore.QRect(1170, 440, 391, 131))
         font = QtGui.QFont()
@@ -183,7 +162,6 @@ class Ui_MainWindow(object):
             "Image Files (*.png *.jpg *.jpeg *.bmp *.gif);;All Files (*)",
             options=options
         )
-        print("Selected file:", self.filename)
         if self.filename:
             self.label.setPixmap(QtGui.QPixmap(self.filename))
 
@@ -196,8 +174,7 @@ class Ui_MainWindow(object):
             img = np.expand_dims(img, axis=0)  # Add batch dimension
 
             predictions = model.predict(img)
-            print("Raw predictions:", predictions)
-            
+
             # Get the indices of the top 3 predictions
             top_3_indices = np.argsort(predictions[0])[-3:][::-1]
             
@@ -226,7 +203,6 @@ class Ui_MainWindow(object):
         return sortlist
 
     def getScreenshot(self):
-        print('method')
         size = MainWindow.size()
         img = ImageGrab.grab(bbox=(MainWindow.x(), MainWindow.y(), size.width()+MainWindow.x(), size.height()+MainWindow.y()))
         img.show()
@@ -238,7 +214,6 @@ class Ui_MainWindow(object):
         self.detect_btn.setText(_translate("MainWindow", "Detect"))
         self.label_2.setText(_translate("MainWindow", "The Dog Identifier"))
         self.label_3.setText(_translate("MainWindow", "Chances are this is a..."))
-        # self.label_4.setText(_translate("MainWindow", "with a likelyhood of..."))
         self.label_5.setText(_translate("MainWindow", "Other notable predictions."))
         self.label_6.setText(_translate("MainWindow", "Choose an image of a dog to detect."))
         self.pushButton.setText(_translate("MainWindow", "Save Context"))
