@@ -1,0 +1,8 @@
+tensorflow-gpu==2.8.0
+scikit-learn==1.3.2
+opencv-python>=4.9.0
+numpy==1.24.4
+easygui
+Pillow>=9.1.0
+tk
+pyqt5>=5.12.3
