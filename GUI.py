@@ -26,7 +26,7 @@ with open('categories.txt', 'r') as file:
 
 # Convert the string to a list
 CATEGORIES = ast.literal_eval(content)
-model = load_model('model\FT_RR-20_ZR-0.5_LR-0.0001_CLR-False_LR-0.001-CL-6-Drop-0.2-FSize-512-07_28_42.h5')
+model = load_model('model/FT_RR-20_ZR-0.5_LR-0.0001_CLR-False_LR-0.001-CL-6-Drop-0.2-FSize-512-07_28_42.h5')
 
 class Ui_MainWindow(object):
     def __init__(self):
