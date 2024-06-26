@@ -9,8 +9,6 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-import tkinter as tk
-from tkinter import filedialog
 from tensorflow.keras.models import load_model
 from tensorflow.keras.utils import load_img, save_img, img_to_array
 from tensorflow.keras.applications.resnet50 import preprocess_input
@@ -176,19 +174,18 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def getImage(self):
-        try:
-            root = tk.Tk()
-            root.withdraw()  # Hide the main window
-            self.filename = filedialog.askopenfilename(
-                title="Select an image file",
-                filetypes=[("Image files", "*.png *.jpg *.jpeg *.bmp *.gif")]
-            )
-            print("Selected file:", self.filename)
-            if self.filename:
-                self.label.setPixmap(QtGui.QPixmap(self.filename))
-            root.destroy()
-        except Exception as e:
-            print("Error:", e)
+        options = QtWidgets.QFileDialog.Options()
+        options |= QtWidgets.QFileDialog.DontUseNativeDialog
+        self.filename, _ = QtWidgets.QFileDialog.getOpenFileName(
+            None,
+            "Select an image file",
+            "",
+            "Image Files (*.png *.jpg *.jpeg *.bmp *.gif);;All Files (*)",
+            options=options
+        )
+        print("Selected file:", self.filename)
+        if self.filename:
+            self.label.setPixmap(QtGui.QPixmap(self.filename))
 
 
     def detectImage(self):
