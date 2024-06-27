@@ -8,7 +8,7 @@ The Dog Breed Classifier is a desktop application that allows users to upload an
 
 ## How to use it
 1. Clone the repository to your local machine.
-2. Ensure you have all the required dependencies installed (see requirements.txt). ### Requires python 3.8+
+2. Ensure you have all the required dependencies installed (see requirements.txt). <strong>Requires python 3.8+</strong>
 3. Run the `GUI.py` file to launch the application.
 4. Click on "Choose Image" to select a dog image from your computer.
 5. Click "Detect" to see the breed predictions.
