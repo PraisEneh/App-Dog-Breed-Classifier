@@ -1,7 +1,7 @@
 # Dog Breed Classifier
 
 ## Inspiration
-As dog lovers and machine learning enthusiasts, I wanted to create an application that could identify dog breeds from images. This project combines my love for dogs with the power of AI to create a user-friendly tool for dog breed identification.
+As a dog lover and machine learning enthusiast, I wanted to create an application that could identify dog breeds from images. This project combines my love for dogs with the power of AI to create a user-friendly tool for dog breed identification.
 
 ## What it does
 The Dog Breed Classifier is a desktop application that allows users to upload an image of a dog, and using a trained machine learning model, it predicts the breed of the dog in the image. The application provides the top three most likely breed predictions along with their confidence percentages.
