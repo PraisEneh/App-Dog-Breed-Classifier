@@ -20,6 +20,7 @@ This application was developed using:
 - TensorFlow and Keras for training and deploying the machine learning model
 - OpenCV and Pillow for image processing
 - Git LFS for managing large files (like the trained model)
+- The training code can be found [here](https://github.com/PraisEneh/Dog-Breed-Classifier)
 
 ## Challenges I ran into
 Some of the major challenges I faced included:
