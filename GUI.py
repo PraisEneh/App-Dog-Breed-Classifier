@@ -12,6 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from tensorflow.keras.models import load_model
 from PIL import ImageGrab
 import numpy as np
+import traceback
 import cv2
 import ast
 
@@ -153,44 +154,52 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def getImage(self):
-        options = QtWidgets.QFileDialog.Options()
-        options |= QtWidgets.QFileDialog.DontUseNativeDialog
-        self.filename, _ = QtWidgets.QFileDialog.getOpenFileName(
-            None,
-            "Select an image file",
-            "",
-            "Image Files (*.png *.jpg *.jpeg *.bmp *.gif);;All Files (*)",
-            options=options
-        )
-        if self.filename:
-            self.label.setPixmap(QtGui.QPixmap(self.filename))
+        try:
+            options = QtWidgets.QFileDialog.Options()
+            options |= QtWidgets.QFileDialog.DontUseNativeDialog
+            self.filename, _ = QtWidgets.QFileDialog.getOpenFileName(
+                None,
+                "Select an image file",
+                "",
+                "Image Files (*.png *.jpg *.jpeg *.bmp *.gif);;All Files (*)",
+                options=options
+            )
+            if self.filename:
+                self.label.setPixmap(QtGui.QPixmap(self.filename))
+        except Exception as e:
+                print(f"Error in getImage: {str(e)}")
+                print(traceback.format_exc()) 
 
 
     def detectImage(self):
-        if self.filename:
-            img = cv2.imread(self.filename)
-            img = cv2.resize(img, (128, 128))  # Resize as per model's input
-            img = img.astype('float32') / 255.0  # Normalize
-            img = np.expand_dims(img, axis=0)  # Add batch dimension
+        try:
+            if self.filename:
+                img = cv2.imread(self.filename)
+                img = cv2.resize(img, (128, 128))  # Resize as per model's input
+                img = img.astype('float32') / 255.0  # Normalize
+                img = np.expand_dims(img, axis=0)  # Add batch dimension
 
-            predictions = model.predict(img)
+                predictions = model.predict(img)
 
-            # Get the indices of the top 3 predictions
-            top_3_indices = np.argsort(predictions[0])[-3:][::-1]
-            
-            # Prepare text for UI update
-            top_classes = [CATEGORIES[idx] for idx in top_3_indices]
-            top_probabilities = predictions[0][top_3_indices]
-            
-            top_1_text = f"{top_classes[0]}: {top_probabilities[0] * 100:.2f}%"
-            top_2_text = f"{top_classes[1]}: {top_probabilities[1] * 100:.2f}%"
-            top_3_text = f"{top_classes[2]}: {top_probabilities[2] * 100:.2f}%"
+                # Get the indices of the top 3 predictions
+                top_3_indices = np.argsort(predictions[0])[-3:][::-1]
+                
+                # Prepare text for UI update
+                top_classes = [CATEGORIES[idx] for idx in top_3_indices]
+                top_probabilities = predictions[0][top_3_indices]
+                
+                top_1_text = f"{top_classes[0]}: {top_probabilities[0] * 100:.2f}%"
+                top_2_text = f"{top_classes[1]}: {top_probabilities[1] * 100:.2f}%"
+                top_3_text = f"{top_classes[2]}: {top_probabilities[2] * 100:.2f}%"
 
-            # Update the UI with the top prediction
-            self.nameTextEdit.setPlainText(top_1_text)
-            
-            # Use othersTextEdit to show the top 2 and top 3 predictions
-            self.othersTextEdit.setPlainText(f"{top_2_text}\n{top_3_text}")
+                # Update the UI with the top prediction
+                self.nameTextEdit.setPlainText(top_1_text)
+                
+                # Use othersTextEdit to show the top 2 and top 3 predictions
+                self.othersTextEdit.setPlainText(f"{top_2_text}\n{top_3_text}")
+        except Exception as e:
+            print(f"Error in detectImage: {str(e)}")
+            print(traceback.format_exc())
 
     def getTop(self, detects):
         for i, j in detects:
@@ -203,9 +212,13 @@ class Ui_MainWindow(object):
         return sortlist
 
     def getScreenshot(self):
-        size = MainWindow.size()
-        img = ImageGrab.grab(bbox=(MainWindow.x(), MainWindow.y(), size.width()+MainWindow.x(), size.height()+MainWindow.y()))
-        img.show()
+        try:
+            size = MainWindow.size()
+            img = ImageGrab.grab(bbox=(MainWindow.x(), MainWindow.y(), size.width()+MainWindow.x(), size.height()+MainWindow.y()))
+            img.show()
+        except Exception as e:
+            print(f"Error in getScreenshot: {str(e)}")
+            print(traceback.format_exc())
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -222,10 +235,14 @@ class Ui_MainWindow(object):
 
 
 if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())
+    try:
+        import sys
+        app = QtWidgets.QApplication(sys.argv)
+        MainWindow = QtWidgets.QMainWindow()
+        ui = Ui_MainWindow()
+        ui.setupUi(MainWindow)
+        MainWindow.show()
+        sys.exit(app.exec_())
+    except Exception as e:
+        print(f"Error in main execution: {str(e)}")
+        print(traceback.format_exc())
